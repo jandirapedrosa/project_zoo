@@ -21,7 +21,7 @@ public class zoo {
             System.out.println("2. Cliente");
             System.out.println("0. Sair");
 
-            System.out.print("Qual a sua opção: ");
+            System.out.print("Tipo de utilizador: ADMIN / CLIENTE / SAIR ");
             opcao = input.nextInt();
 
             switch (opcao) {

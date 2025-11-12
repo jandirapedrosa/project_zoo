@@ -5,72 +5,42 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import static project.biblioteca.contarLinhasFicheiro;
+import static project.biblioteca.ficheiroMatrizAnimais;
 
 public class admin {
 
-    public static String[][] ficheiroMatrizAnimais(String caminho) throws FileNotFoundException {
+    public static void validarAdmin(String userName, String password) {
 
-        // Declarar variável
-        int linhaAtual = 0;
-
-        // Contar as linhas do ficheiro (usar biblioteca)
-        int contadorAnimais = contarLinhasFicheiro(caminho) - 1;
-
-        // Criar a matriz à medida - AQUI ESTÁ ESTA MATRIZ
-        String[][] matrizCompletaAnimal = new String[contadorAnimais][6];
-
-        File ficheiroAnimais = new File(caminho);
-        Scanner sc = new Scanner(ficheiroAnimais);
-
-        // Avançar o cabeçalho
-        String linha = sc.nextLine();
-
-        while (sc.hasNextLine()) {
-            linha = sc.nextLine();
-            String[] linhaSeparada = linha.split(";");
-
-            for (int coluna = 0; coluna < matrizCompletaAnimal[0].length; coluna++) {
-                matrizCompletaAnimal[linhaAtual][coluna] = linhaSeparada[coluna];
-            }
-
-            linhaAtual++;
-        }
-
-        return matrizCompletaAnimal;
-    }
-
-    public static String[][] ficheiroMatrizClientes(String caminhoCl) throws FileNotFoundException {
+        // Imporar o Scanner
+        Scanner input = new Scanner(System.in);
 
         // Declarar variáveis
-        int lineAtual = 0;
+        String usernameCorreto = "admin";
+        String palavrapasseCorreto = "code";
+        String username, palavrapasse;
 
-        // Contar as linhas do ficheiro (usando a biblioteca)
-        int contarLinhas = contarLinhasFicheiro(caminhoCl) - 1;
+        System.out.print("Username: ");
+        username = input.next();
 
-        // Criar a matriz
-        String [][] matrizCompletaClientes = new String[contarLinhas][4];
+        System.out.println("Palavra-passe: ");
+        palavrapasse = input.next();
 
-        File ficheiroClientes = new File(caminhoCl);
-        Scanner sc = new Scanner(ficheiroClientes);
+        // Validar
 
-        // Avançar o cabeçalho
-        String linha = sc.nextLine();
+        do {
 
-        while (sc.hasNextLine()) {
-            linha = sc.nextLine();
-            String[] linhaSeparada = linha.split(";");
-
-            for (int coluna =0; coluna < matrizCompletaClientes[0].length; coluna++) {
-                matrizCompletaClientes[lineAtual][coluna] = linhaSeparada[coluna];
-            }
-
-            lineAtual++;
+        if (username.equals(usernameCorreto) && palavrapasse.equals(palavrapasseCorreto)) {
+            System.out.println("Login bem-sucedido! Bem-vindo, " + username + ".");
+        } else {
+            System.out.println("Username ou palavra-passe incorretos.");
         }
 
-        return matrizCompletaClientes;
+        } while (username == usernameCorreto && palavrapasse == palavrapasseCorreto);
+
+
+        input.close();
 
     }
-
 
     /**
      * Método para o menu Admin
