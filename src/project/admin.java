@@ -9,6 +9,11 @@ import static project.biblioteca.ficheiroMatrizAnimais;
 
 public class admin {
 
+    /**
+     * Método para validar o utilizador admin
+     * @param userName
+     * @param password
+     */
     public static void validarAdmin(String userName, String password) {
 
         // Imporar o Scanner
@@ -18,28 +23,25 @@ public class admin {
         String usernameCorreto = "admin";
         String palavrapasseCorreto = "code";
         String username, palavrapasse;
+        boolean valido = false;
 
-        System.out.print("Username: ");
-        username = input.next();
+        // Pedir ao utilizador e repetir até acertar
+        while (!valido) {
 
-        System.out.println("Palavra-passe: ");
-        palavrapasse = input.next();
+            System.out.print("USERNAME: ");
+            username = input.next();
 
-        // Validar
+            System.out.println("PASSWORD: ");
+            palavrapasse = input.next();
 
-        do {
-
-        if (username.equals(usernameCorreto) && palavrapasse.equals(palavrapasseCorreto)) {
-            System.out.println("Login bem-sucedido! Bem-vindo, " + username + ".");
-        } else {
-            System.out.println("Username ou palavra-passe incorretos.");
+            // Aqui validar
+            if (username.equals(usernameCorreto) && palavrapasse.equals(palavrapasseCorreto)) {
+                System.out.println("\nLogin bem-sucedido! Bem vindo" + username + ".");
+                valido = true;
+            } else {
+                System.out.println("\nUsername ou password incorretos. Tente novamente.\n");
+            }
         }
-
-        } while (username == usernameCorreto && palavrapasse == palavrapasseCorreto);
-
-
-        input.close();
-
     }
 
     /**

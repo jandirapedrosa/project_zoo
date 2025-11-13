@@ -17,11 +17,13 @@ public class zoo {
         do {
 
             System.out.println("*_*_*_*_*_*_ HOME *_*_*_*_*_*_");
+            System.out.println("Tipo de utilizador: ADMIN || CLIENTE || SAIR ");
+            System.out.println();
             System.out.println("1. Admin");
             System.out.println("2. Cliente");
             System.out.println("0. Sair");
 
-            System.out.print("Tipo de utilizador: ADMIN / CLIENTE / SAIR ");
+
             opcao = input.nextInt();
 
             switch (opcao) {
