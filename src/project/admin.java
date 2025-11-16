@@ -9,10 +9,11 @@ public class admin {
 
     /**
      * Método para validar o utilizador admin
-     * @param userName
-     * @param password
+     *
+     * @return
+     *
      */
-    public static void validarAdmin(String userName, String password) {
+    public static boolean validarAdmin() {
 
         // Imporar o Scanner
         Scanner input = new Scanner(System.in);
@@ -40,6 +41,7 @@ public class admin {
                 System.out.println("\nUsername ou password incorretos. Tente novamente.\n");
             }
         }
+        return valido;
     }
 
     /**
@@ -73,7 +75,14 @@ public class admin {
             System.out.println("0. Sair");
 
             System.out.println("Qual a sua opção: ");
+//            opcaoAdmin = input.nextInt();
+            while (!input.hasNextInt()) {
+                System.out.println("Qual a sua opção?: ");
+                input.nextLine(); // para descartar o texto inválido
+            }
+
             opcaoAdmin = input.nextInt();
+            input.nextLine();
 
 
             switch (opcaoAdmin) {
@@ -83,24 +92,32 @@ public class admin {
                     System.out.println("1 - Animais");
                     System.out.println("2 - Clientes");
                     System.out.println("3 - Interações");
+//                    fichListarConteudo = input.nextInt();
+                    while (!input.hasNextInt()) {
+                        System.out.println("Qual a sua opção?: ");
+                        input.nextLine(); // para descartar o texto inválido
+                    }
+
                     fichListarConteudo = input.nextInt();
+                    input.nextLine();
 
                     if (fichListarConteudo == 1) {
-                        listarConteudos(ficheiroMatrizAnimais("animais.csv"));
+                        listarConteudos(ficheiroMatrizAnimais("ficheiros/animais.csv"));
                     } else if (fichListarConteudo == 2) {
-                        listarConteudos(ficheiroMatrizClientes("clientes.csv"));
+                        listarConteudos(ficheiroMatrizClientes("ficheiros/clientes.csv"));
                     } else if (fichListarConteudo == 3) {
-                        listarConteudos(ficheiroMatrizInteracoes("interacoes.csv"));
+                        listarConteudos(ficheiroMatrizInteracoes("ficheiros/interacoes.csv"));
                     }
-//                    break;
+                    break;
 
                 case 2:
                     System.out.println("2. Estatísticas gerais de interações");
-                    estatisticasGeraisInteracoes(ficheiroMatrizInteracoes("interacoes.csv"));
-//                    break;
+                    estatisticasGeraisInteracoes(ficheiroMatrizInteracoes("ficheiros/interacoes.csv"));
+                    break;
 
                 case 3:
                     System.out.println("3. Receita total por tipo de interação");
+                    receitaTotalPorTipo(matrizInteracoes);
                     break;
 
                 case 4:
@@ -110,10 +127,14 @@ public class admin {
 
                 case 5:
                     System.out.println("5. Top 3 espécies com mais apadrinhamentos");
+                    //AINDA NÃO FIZ ESTE
                     break;
 
                 case 6:
                     System.out.println("6. Listar padrinhos de um animal");
+                    System.out.print("ID do animal (ex: A01): ");
+                    String id = input.nextLine();
+                    // AINDA NÃO FIZ ESTE TBM
                     break;
 
                 case 7:
@@ -154,45 +175,76 @@ public class admin {
 
     }
 
-    public static void estatisticasGeraisInteracoes(String[][] matrizInteracoes) {
+    public static void estatisticasGeraisInteracoes(String[][] interacoes) {
 
         // Declarar as variáveis
         int visita = 0, espetaculo = 0, alimentacao = 0, apadrinha = 0;
-        int total = matrizInteracoes.length;
+        int total = interacoes.length;
         String tipoInteracao;
 
         // exer09 do prof - pesquisarGenero
-        for (int i = 0; i < matrizInteracoes.length; i++) {
-            tipoInteracao = matrizInteracoes[i][2];
+        for (int i = 0; i < interacoes.length; i++) {
+            tipoInteracao = interacoes[i][2];
 
             switch (tipoInteracao) {
-                case "visita": visita++;
-                case "espetaculo": espetaculo++;
-                case "alimentacao": alimentacao++;
-                case "apadrinhamento": apadrinha++;
+                case "visita":
+                    visita++;
+                    break;
+                case "espetaculo":
+                    espetaculo++;
+                    break;
+                case "alimentacao":
+                    alimentacao++;
+                    break;
+                case "apadrinhamento":
+                    apadrinha++;
+                    break;
             }
 
         }
 
         System.out.println("Total de interações: " + total);
-        System.out.println("VISITA: " + visita);
-        System.out.println("ESPETACULO: " + espetaculo);
-        System.out.println("ALIMENTAÇÃO : " + alimentacao);
-        System.out.println("APADRINHAMENTO: " + apadrinha);
+        System.out.println("visita: " + visita);
+        System.out.println("espetaculo: " + espetaculo);
+        System.out.println("alimentacao : " + alimentacao);
+        System.out.println("apadrinhamento: " + apadrinha);
 
     }
 
-    public static void receitaTotal(String[][] interacoes) {
+    public static void receitaTotalPorTipo(String[][] interacoes) {
 
         // Declarar as variáveis
-//        double visita = 0, espetaculo = 0, alimentacao = 0, apadrinha = 0;
-//        String tipo;
+        double rVisita = 0, rEspetaculo = 0, rAlimentacao = 0, rApadrinha = 0;
+        String tipo;
+        double valor, total;
 
-//
-//        for (int i = 0; i < interacoes.length; i++) {
+        for (int i = 0; i < interacoes.length; i++) {
+            tipo = interacoes[i][2];
+            valor = Double.parseDouble(interacoes[i][5]);
 
+            switch (tipo) {
+                case "visita":
+                    rVisita += valor;
+                    break;
+                case "espetaculo":
+                    rEspetaculo += valor;
+                    break;
+                case "alimentacao":
+                    rAlimentacao += valor;
+                    break;
+                case "apadrinhamento":
+                    rApadrinha += valor;
+                    break;
+            }
+        }
 
-//        }
+        total = rVisita + rEspetaculo + rAlimentacao + rApadrinha;
+
+        System.out.println("Receita visita: " + rVisita);
+        System.out.println("Receita espetaculo: " + rEspetaculo);
+        System.out.println("Receita alimentacao : " + rAlimentacao);
+        System.out.println("Receita apadrinhamento: " + rApadrinha);
+        System.out.println("Receita total: " + total);
 
     }
 
@@ -200,15 +252,15 @@ public class admin {
 
         // Declarar variáveis
         int [] contagem = new int[animais.length];
-        String idAnimal;
+        String idInteracoes;
 
         // Contar interações por animal
         for (int i = 0; i < interacoes.length; i++) {
-            idAnimal = interacoes[i][3];
+            idInteracoes = interacoes[i][3];
 
-            for (int j = 0; j < animais.length; i++) {
+            for (int j = 0; j < animais.length; j++) {
 
-                if (animais[j][0] == idAnimal) {
+                if (animais[j][0].equals(idInteracoes)) {
                     contagem[j]++;
                 }
             }
@@ -219,20 +271,17 @@ public class admin {
 
         for (int i = 1; i < contagem.length; i++) {
 
-            if (contagem[i] > contagem[totalVetor]) {
-                totalVetor = i;
-            }
+            if (contagem[i] > contagem[totalVetor]) totalVetor = i;
+//            if (contagem[i] > contagem[totalVetor]) {
+//                totalVetor = i;
+//            }
         }
 
-//        System.out.println("Animal mais popular: ");
+        System.out.println("Animal mais popular: ");
         System.out.println("Nome: " + animais[totalVetor][1]);
         System.out.println("Espécie: " + animais[totalVetor][2]);
         System.out.println("Habitat: " + animais[totalVetor][3]);
         System.out.println("Interações: " + contagem[totalVetor]);
-
-
-
-
 
     }
 

@@ -1,6 +1,11 @@
 package project;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import static project.admin.menuAdmin;
+import static project.admin.validarAdmin;
+import static project.cliente.menuCliente;
 
 
 public class zoo {
@@ -8,7 +13,7 @@ public class zoo {
     /**
      * Método para menu principal
      */
-    public static void menuPrincipal() {
+    public static void menuPrincipal() throws FileNotFoundException {
 
         Scanner input = new Scanner(System.in);
 
@@ -30,10 +35,16 @@ public class zoo {
 
                 case 1:
                     System.out.println("Menu admin");
+//                    VER ISTO AQUI!!!!!
+                    if (validarAdmin()) {
+                        menuAdmin();
+                    }
+                    ;
                     break;
 
                 case 2:
                     System.out.println("Menu cliente");
+                    menuCliente();
                     break;
 
                 case 0:
@@ -52,7 +63,7 @@ public class zoo {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         menuPrincipal();
     }
 }
